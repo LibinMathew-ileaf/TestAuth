@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">SecureAuthentication</string>
+    <string name="user_name">User Name</string>
+    <string name="name">Name</string>
+    <string name="password">Password</string>
+    <string name="confirm_password">Confirm Password</string>
+    <string name="sign_in">Sign In</string>
+    <string name="sign_up">Sign Up</string>
+    <string name="secure_authentication">Secure Authentication</string>
+    <string name="warning_error">Something went wrong</string>
+    <string name="sign_out">Log Out</string>
+</resources>
