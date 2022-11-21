@@ -4,6 +4,8 @@ package com.example.secureauthentication.reposistory
 import android.app.Application
 import android.util.Base64
 import com.example.secureauthentication.R
+import com.example.secureauthentication.database.dao.UserInfoDao
+import com.example.secureauthentication.model.UserInfo
 import com.example.secureauthentication.utils.*
 import com.example.secureauthentication.utils.Decryptor
 import kotlinx.coroutines.Dispatchers
@@ -12,7 +14,7 @@ import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
 import javax.inject.Inject
 
-class DataStoreRepository @Inject constructor(private val pref: PreferenceManager,
+class DataStoreRepository @Inject constructor(private val userInfo: UserInfoDao,
                                               private val applicationContext: Application, private val encryptor: Encryptor, private val decryptor: Decryptor) {
 
     fun saveUserData(name: String, userName: String, password: String): Flow<State<Boolean>> {
@@ -20,8 +22,7 @@ class DataStoreRepository @Inject constructor(private val pref: PreferenceManage
             try {
                 val userDetail= "$name/$userName/$password"
                 val (encryptUserDetail,iv) = encryptString(userDetail)
-                pref.setUserDetail(encryptUserDetail)
-                pref.setUserDetailIv(iv)
+                userInfo.insert(UserInfo(id= 1,userDetail=encryptUserDetail, userDetailIv = iv))
                 return@flow emit(State.Success(true))
             } catch (e: Exception) {
                 println(e.stackTrace)
@@ -40,12 +41,20 @@ class DataStoreRepository @Inject constructor(private val pref: PreferenceManage
 
     }
 
-    fun isUserRegistered(): Boolean {
-        if (pref.getUserDetail().isNotEmpty()) {
-            return true
-        }
+    fun isUserRegistered(): Flow<State<Boolean>> {
+        return flow {
+            try {
+                val userData =   userInfo.getUserData()
+                userData?.let {
+                    return@flow   emit(State.Success(true))
+                }
 
-        return false
+                return@flow emit(State.Error("No registered user"))
+
+            } catch (e: Exception) {
+                emit(State.Failed(e))
+            }
+        }.flowOn(Dispatchers.IO)
     }
 
     private fun encryptString(userName: String): Pair<String,String> {
@@ -57,7 +66,8 @@ class DataStoreRepository @Inject constructor(private val pref: PreferenceManage
     fun signInUser( userName: String, password: String): Flow<State<Boolean>> {
         return flow {
             try {
-                val decryptedUserDetail = decryptString(pref.getUserDetail(),pref.getUserDetailIv())
+                val userData =   userInfo.getUserData()!!
+                val decryptedUserDetail = decryptString(userData.userDetail,userData.userDetailIv)
 
                 val split = decryptedUserDetail.split('/')
                 //var decryptedPassword= decryptString(pref.getPassword(),pref.getPasswordIV())
@@ -72,20 +82,21 @@ class DataStoreRepository @Inject constructor(private val pref: PreferenceManage
             } catch (e: Exception) {
                 emit(State.Failed(e))
             }
-        }
+        }.flowOn(Dispatchers.IO)
     }
 
     fun getUserDetails():  Flow<State<String>> {
         return flow {
             try {
-                val decryptedUserDetail = decryptString(pref.getUserDetail(), pref.getUserDetailIv())
+                val userData =   userInfo.getUserData()!!
+                val decryptedUserDetail = decryptString(userData.userDetail,userData.userDetailIv)
                 return@flow emit(State.Success(decryptedUserDetail))
 
 
             } catch (e: Exception) {
                 emit(State.Failed(e))
             }
-        }
+        }.flowOn(Dispatchers.IO)
     }
 }
 

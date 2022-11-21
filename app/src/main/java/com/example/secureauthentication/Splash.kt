@@ -9,7 +9,7 @@ import android.os.Looper
 import android.view.WindowInsets
 import android.view.WindowManager
 import androidx.activity.viewModels
-import com.example.secureauthentication.viewmodel.SignUpViewModel
+import androidx.lifecycle.Observer
 import com.example.secureauthentication.viewmodel.SplashViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -31,17 +31,21 @@ class Splash : AppCompatActivity() {
             )
         }
 
+        viewModel.isUserRegistered.observe(this, onUserRegistered)
         Handler(Looper.getMainLooper()).postDelayed({
-            if(viewModel.isUserRegistered){
-                val intent = Intent(this, MainActivity::class.java)
-                startActivity(intent)
-                finish()
-            }else{
-                val intent = Intent(this, SignUp::class.java)
-                startActivity(intent)
-                finish()
-            }
+            viewModel.checkUserRegistered() }, 3000)
+    }
 
-        }, 3000)
+    private val onUserRegistered = Observer<Boolean> { isRegistered ->
+        if(isRegistered){
+            val intent = Intent(this, MainActivity::class.java)
+            startActivity(intent)
+            finish()
+        }else{
+            val intent = Intent(this, SignUp::class.java)
+            startActivity(intent)
+            finish()
+        }
+
     }
 }
