@@ -1,5 +1,6 @@
 package com.example.secureauthentication.viewmodel
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -14,12 +15,16 @@ import javax.inject.Inject
 class SignInViewModel @Inject constructor(private val dataStoreRepository: DataStoreRepository) :
     ViewModel() {
 
-     val onSignInUserSuccess: MutableLiveData<Boolean> by lazy {
+     private val _onSignInUserSuccess: MutableLiveData<Boolean> by lazy {
         MutableLiveData()
     }
-      val onSignInUserError: MutableLiveData<String> by lazy {
+    val onSignInUserSuccess: LiveData<Boolean> get() = _onSignInUserSuccess
+
+      private val _onSignInUserError: MutableLiveData<String> by lazy {
         MutableLiveData("")
     }
+     val  onSignInUserError: LiveData<String> get() = _onSignInUserError
+
 
     fun  signInUser( userName:String,password:String) {
         viewModelScope.launch {
@@ -27,13 +32,13 @@ class SignInViewModel @Inject constructor(private val dataStoreRepository: DataS
                 when (its) {
                     is State.Failed -> {
                         its.exception.printStackTrace()
-                        onSignInUserSuccess.value = false
+                        _onSignInUserSuccess.value = false
                     }
                     is State.Success -> {
-                        onSignInUserSuccess.value = true
+                        _onSignInUserSuccess.value = true
                     }
                     is State.Error -> {
-                        onSignInUserError.value=its.error
+                        _onSignInUserError.value=its.error
                     }
                 }
             }

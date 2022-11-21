@@ -1,5 +1,6 @@
 package com.example.secureauthentication.viewmodel
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -14,10 +15,10 @@ import javax.inject.Inject
 class MainActivityViewModel @Inject constructor(private val dataStoreRepository: DataStoreRepository) :
     ViewModel() {
 
-     val onFetchDetails: MutableLiveData<String> by lazy {
+     private val _onFetchDetails: MutableLiveData<String> by lazy {
         MutableLiveData("")
-    }
-
+     }
+    val onFetchDetails: LiveData<String> get() = _onFetchDetails
 
     fun  getUserDetail() {
         viewModelScope.launch {
@@ -27,7 +28,7 @@ class MainActivityViewModel @Inject constructor(private val dataStoreRepository:
                         its.exception.printStackTrace()
                     }
                     is State.Success -> {
-                        onFetchDetails.value = its.data
+                        _onFetchDetails.value = its.data
                     }
                     is State.Error -> {
 

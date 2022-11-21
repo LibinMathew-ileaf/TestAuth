@@ -22,10 +22,10 @@ class DataStoreRepository @Inject constructor(private val pref: PreferenceManage
                 val (encryptUserDetail,iv) = encryptString(userDetail)
                 pref.setUserDetail(encryptUserDetail)
                 pref.setUserDetailIv(iv)
-                emit(State.Success(true))
+                return@flow emit(State.Success(true))
             } catch (e: Exception) {
                 println(e.stackTrace)
-                emit(State.Failed(e))
+               return@flow emit(State.Failed(e))
             }
 
         }.flowOn(Dispatchers.IO)
@@ -79,7 +79,7 @@ class DataStoreRepository @Inject constructor(private val pref: PreferenceManage
         return flow {
             try {
                 val decryptedUserDetail = decryptString(pref.getUserDetail(), pref.getUserDetailIv())
-                emit(State.Success(decryptedUserDetail))
+                return@flow emit(State.Success(decryptedUserDetail))
 
 
             } catch (e: Exception) {

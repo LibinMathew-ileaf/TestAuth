@@ -1,5 +1,6 @@
 package com.example.secureauthentication.viewmodel
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -14,19 +15,19 @@ import javax.inject.Inject
 class SignUpViewModel @Inject constructor(private val dataStoreRepository: DataStoreRepository) :
     ViewModel() {
 
-    val onSaveUserData: MutableLiveData<Boolean> by lazy {
+    private val _onSaveUserData: MutableLiveData<Boolean> by lazy {
         MutableLiveData()
     }
-
+    val onSaveUserData: LiveData<Boolean> get() = _onSaveUserData
     fun saveUserData(name :String,userName:String,password:String) {
         viewModelScope.launch {
             dataStoreRepository.saveUserData(name,userName,password).collect { its ->
                 when (its) {
                     is State.Failed -> {
-                        onSaveUserData.value=false
+                        _onSaveUserData.value=false
                     }
                     is State.Success -> {
-                        onSaveUserData.value=true
+                        _onSaveUserData.value=true
                     }
                     is State.Error -> {
 
