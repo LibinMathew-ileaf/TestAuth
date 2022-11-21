@@ -10,6 +10,7 @@ Android demo application  which show how securely store sensitive data.
 * Sign Screen: Registered user can sign in with username and password.
 * Algorithm used  for encryption/decryption transformation algorithm: “AES/GCM/NoPadding”
 * Android keystore used store keys securely.
+* Secure data stored in room database(implementation in seperate branch _db_room_implementation)
 ### Architecture:
 Project is developed in kotlin programming  language.Architecture used in project is MVVM with coroutine Flow api .
 
