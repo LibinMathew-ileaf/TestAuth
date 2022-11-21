@@ -8,7 +8,8 @@ Android demo application  which show how securely store sensitive data.
 * SignUp Screen: To register new user. 
 * Main Screen: Show welcome message for new user and sign out button.
 * Sign Screen: Registered user can sign in with username and password.
-* 
+* Algorithm used  for encryption/decryption transformation algorithm: “AES/GCM/NoPadding”
+* Android keystore used store keys securely.
 ### Architecture:
 Project is developed in kotlin programming  language.Architecture used in project is MVVM with coroutine Flow api .
 
@@ -19,3 +20,4 @@ Project is developed in kotlin programming  language.Architecture used in projec
 - [Coroutines](https://developer.android.com/kotlin/coroutines) - Coroutine is a concurrency design pattern that you can use on Android to simplify code that executes asynchronously.
 - [Data Binding](https://developer.android.com/topic/libraries/data-binding)-The Data Binding Library is a support library that allows you to bind UI components in your layouts to data sources in your app using a declarative format rather than programmatically.
 - [Material Design support libraries](https://material.io/develop/android/docs/getting-started) - Modern UI designing library for modern apps.
+- [LiveData](https://developer.android.com/topic/libraries/architecture/livedata)LiveData is an observable data holder class. Unlike a regular observable, LiveData is lifecycle-aware, meaning it respects the lifecycle of other app components, such as activities, fragments, or services. This awareness ensures LiveData only updates app component observers that are in an active lifecycle state.
