@@ -10,7 +10,7 @@ Android demo application  which show how securely store sensitive data.
 * Sign Screen: Registered user can sign in with username and password.
 * Algorithm used  for encryption/decryption transformation algorithm: “AES/GCM/NoPadding”
 * Android keystore used store keys securely.
-* Secure data stored in room database(implementation in seperate branch '_db_room_implementation')
+* User  data stored in room database(implementation in seperate branch '_db_room_implementation')
 ### Architecture:
 Project is developed in kotlin programming  language.Architecture used in project is MVVM with coroutine Flow api .
 
@@ -22,7 +22,7 @@ Project is developed in kotlin programming  language.Architecture used in projec
 - [Data Binding](https://developer.android.com/topic/libraries/data-binding)-The Data Binding Library is a support library that allows you to bind UI components in your layouts to data sources in your app using a declarative format rather than programmatically.
 - [Material Design support libraries](https://material.io/develop/android/docs/getting-started) - Modern UI designing library for modern apps.
 - [LiveData](https://developer.android.com/topic/libraries/architecture/livedata) LiveData is an observable data holder class. Unlike a regular observable, LiveData is lifecycle-aware, meaning it respects the lifecycle of other app components, such as activities, fragments, or services. This awareness ensures LiveData only updates app component observers that are in an active lifecycle state.
-- [Room](https://developer.android.com/training/data-storage/room) LiveData is an observable data holder class. Unlike a regular observable, LiveData is lifecycle-aware, meaning it respects the lifecycle of other app components, such as activities, fragments, or services. This awareness ensures LiveData only updates app component observers that are in an active lifecycle state.
+- [Room](https://developer.android.com/training/data-storage/room) Room is Google's new persistence library designed to make it easier to build offline apps.
 
 
 ## Installation
