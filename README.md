@@ -1,6 +1,6 @@
 # TestAuth
 
-To develop a simple app that prioritizes storing sensitive data securely. Must consider latest software development practices and tools for developing a simple and low level design app.
+Demo application to storing sensitive data securely.
 
 Android demo application  which show how securely store sensitive data.
 
