@@ -9,4 +9,5 @@
     <string name="secure_authentication">Secure Authentication</string>
     <string name="warning_error">Something went wrong</string>
     <string name="sign_out">Log Out</string>
+    <string name="alias">Alias</string>
 </resources>

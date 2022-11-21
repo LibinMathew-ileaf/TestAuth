@@ -1,41 +1,32 @@
-package com.example.secureauthentication.utils;
+package com.example.secureauthentication.utils
 
 import android.content.SharedPreferences
 import javax.inject.Inject
 
 class PreferenceManager @Inject constructor(private val preferences: SharedPreferences) {
     companion object {
-        const val NAME = "name"
-        const val USER_NAME = "user_name"
-        const val PASSWORD = "password"
-
+        const val USER_DETAIL = "user_detail"
+        const val USER_DETAIL_IV = "user_detail_iv"
     }
 
-    private fun setPreferenceStringData (key:String, value:String){
+    private fun setPreferenceStringData(key: String, value: String) {
         val editor = preferences.edit()
         editor.putString(key, value)
         editor.apply()
     }
 
-    fun clearAll () {
+    fun clearAll() {
         val editor = preferences.edit()
         editor.clear()
         editor.commit()
     }
 
-    fun getUserName () = preferences.getString(USER_NAME, "")!!
-    fun setUserName (userName:String){
-        setPreferenceStringData(USER_NAME, userName)
+    fun setUserDetail(userDetail:String){
+        setPreferenceStringData(USER_DETAIL,userDetail)
     }
-    fun getName () = preferences.getString(NAME, "")!!
-    fun setName (userName:String){
-        setPreferenceStringData(NAME, userName)
+    fun setUserDetailIv(iv:String){
+        setPreferenceStringData(USER_DETAIL_IV,iv)
     }
-    fun getPassword () = preferences.getString(PASSWORD, "")!!
-    fun setPassword ( password:String){
-        setPreferenceStringData(PASSWORD, password)
-    }
-
-
-
+    fun getUserDetail() = preferences.getString(USER_DETAIL, "")!!
+    fun getUserDetailIv() = preferences.getString(USER_DETAIL_IV, "")!!
 }

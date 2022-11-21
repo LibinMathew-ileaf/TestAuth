@@ -11,29 +11,26 @@ import javax.inject.Inject
 
 
 @HiltViewModel
-class SignInViewModel @Inject constructor(private val dataStoreRepository: DataStoreRepository) :
+class MainActivityViewModel @Inject constructor(private val dataStoreRepository: DataStoreRepository) :
     ViewModel() {
 
-     val onSignInUserSuccess: MutableLiveData<Boolean> by lazy {
-        MutableLiveData()
-    }
-      val onSignInUserError: MutableLiveData<String> by lazy {
+     val onFetchDetails: MutableLiveData<String> by lazy {
         MutableLiveData("")
     }
 
-    fun  signInUser( userName:String,password:String) {
+
+    fun  getUserDetail() {
         viewModelScope.launch {
-            dataStoreRepository.signInUser(userName,password).collect { its ->
+            dataStoreRepository.getUserDetails().collect { its ->
                 when (its) {
                     is State.Failed -> {
                         its.exception.printStackTrace()
-                        onSignInUserSuccess.value = false
                     }
                     is State.Success -> {
-                        onSignInUserSuccess.value = true
+                        onFetchDetails.value = its.data
                     }
                     is State.Error -> {
-                        onSignInUserError.value=its.error
+
                     }
                 }
             }

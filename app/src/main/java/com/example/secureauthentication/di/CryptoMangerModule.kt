@@ -1,11 +1,10 @@
 package com.example.secureauthentication.di
-import android.content.Context
-import com.example.secureauthentication.utils.CryptoManger
+import com.example.secureauthentication.utils.Decryptor
+import com.example.secureauthentication.utils.Encryptor
 
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
-import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 
 @Module
@@ -13,9 +12,12 @@ import dagger.hilt.components.SingletonComponent
 object CryptoMangerModule {
 
     @Provides
-    fun provideCryptoManger(
-        @ApplicationContext context: Context
-    ): CryptoManger {
-        return CryptoManger()
+    fun provideDeCryptor(): Decryptor {
+        return Decryptor()
+    }
+
+    @Provides
+    fun provideEnCryptor(): Encryptor {
+        return Encryptor()
     }
 }
