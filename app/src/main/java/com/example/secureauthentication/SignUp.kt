@@ -41,7 +41,7 @@ class SignUp : AppCompatActivity() {
             startActivity(intent)
             finish()
         }else{
-            toastHelper.showToast(getString(R.string.warning_error));
+            toastHelper.showToast(getString(R.string.warning_error))
         }
 
     }
@@ -52,19 +52,19 @@ class SignUp : AppCompatActivity() {
         confirmPassword: String
     ) {
         if (name.isEmpty()) {
-            toastHelper.showToast("Name Not Empty");
+            toastHelper.showToast("Name Not Empty")
             return
         }
         if (userName.isEmpty()) {
-            toastHelper.showToast("User Name Not Empty");
+            toastHelper.showToast("User Name Not Empty")
             return
         }
         if (password.isEmpty()) {
-            toastHelper.showToast("Password Not Empty");
+            toastHelper.showToast("Password Not Empty")
             return
         }
         if (confirmPassword.isEmpty()) {
-            toastHelper.showToast("Confirm Password Not Empty");
+            toastHelper.showToast("Confirm Password Not Empty")
             return
         }
 

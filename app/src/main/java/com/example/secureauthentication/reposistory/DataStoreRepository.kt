@@ -15,7 +15,9 @@ import kotlinx.coroutines.flow.flowOn
 import javax.inject.Inject
 
 class DataStoreRepository @Inject constructor(private val userInfo: UserInfoDao,
-                                              private val applicationContext: Application, private val encryptor: Encryptor, private val decryptor: Decryptor) {
+                                              private val applicationContext: Application,
+                                              private val encryptor: Encryptor,
+                                              private val decryptor: Decryptor) {
 
     fun saveUserData(name: String, userName: String, password: String): Flow<State<Boolean>> {
         return flow {
@@ -57,7 +59,7 @@ class DataStoreRepository @Inject constructor(private val userInfo: UserInfoDao,
         }.flowOn(Dispatchers.IO)
     }
 
-    private fun encryptString(userName: String): Pair<String,String> {
+     fun encryptString(userName: String): Pair<String,String> {
         val byteArray = encryptor.encryptText(applicationContext.getString(R.string.alias), userName)
         return  Pair(Base64.encodeToString(byteArray, Base64.DEFAULT),Base64.encodeToString(encryptor.iv, Base64.DEFAULT))
     }

@@ -16,6 +16,6 @@ object ToastHelperModule {
     fun provideCToastHelper(
         @ApplicationContext context: Context
     ): ToastHelper {
-        return ToastHelper(context);
+        return ToastHelper(context)
     }
 }
